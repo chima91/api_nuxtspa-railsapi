@@ -17,6 +17,7 @@ class User < ApplicationRecord
                         },
                         format: {
                           with: VALID_PASSWORD_REGEX,
+                          message: :invalid_password,
                           allow_blank: true
                         },
                         # name属性のみ更新する場合などにエラーとならないために設定する
