@@ -30,7 +30,17 @@ module App
     # in config/environments, which are processed later.
     #
     # config.time_zone = "Central Time (US & Canada)"
+    config.time_zone = ENV["TZ"]
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # DBの読み書きに使用するタイムゾーン
+    config.active_record.default_timezone = :utc
+
+    # i18nで使われるデフォルトのロケールファイル
+    config.i18n.default_locale = :ja
+
+    # $LOAD_PATHにautoload pathを追加するか（Zeitwerk有効時はfalse推奨）
+    config.add_autoload_paths_to_load_path = false
 
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
