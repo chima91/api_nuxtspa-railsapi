@@ -1,4 +1,8 @@
+require "validator/email_validator"
+
 class User < ApplicationRecord
+  before_validation :downcase_email
+
   # bcrypt gem の メソッド（新規登録時のみパスワード入力必須を検証する）
   has_secure_password
 
@@ -6,6 +10,11 @@ class User < ApplicationRecord
                     length: {
                       maximum: 30,
                       # 入力が空白の場合にはエラーを出さない
+                      allow_blank: true
+                    }
+
+  validates :email, presence: true,
+                    email: {
                       allow_blank: true
                     }
 
@@ -22,4 +31,20 @@ class User < ApplicationRecord
                         },
                         # name属性のみ更新する場合などにエラーとならないために設定する
                         allow_nil: true
+
+  class << self
+    def find_by_activated(email)
+      find_by(email: email, activated: true)
+    end
+  end
+
+  def email_activated?
+    users = User.where.not(id: id)
+    users.find_by_activated(email).present?
+  end
+
+  private
+    def downcase_email
+      self.email.downcase! if email
+    end
 end
