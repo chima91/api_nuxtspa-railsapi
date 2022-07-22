@@ -6,11 +6,17 @@ require "minitest/reporters"
 Minitest::Reporters.use!
 
 class ActiveSupport::TestCase
+  parallelize_setup do |worker|
+    # seedデータの読み込み
+    load "#{Rails.root}/db/seeds.rb"
+  end
+
   # Run tests in parallel with specified workers
+  # :number_of_processors -> 使用しているマシン(今回はDocker)のコア数 -> 4
   parallelize(workers: :number_of_processors)
 
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
-  fixtures :all
+  # fixtures :all
 
   # Add more helper methods to be used by all tests here...
 end
