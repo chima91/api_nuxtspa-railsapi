@@ -1,6 +1,7 @@
 require "validator/email_validator"
 
 class User < ApplicationRecord
+  include TokenGenerateService
   before_validation :downcase_email
 
   # bcrypt gem の メソッド（新規登録時のみパスワード入力必須を検証する）
