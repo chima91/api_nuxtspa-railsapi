@@ -42,6 +42,9 @@ module App
     # $LOAD_PATHにautoload pathを追加するか（Zeitwerk有効時はfalse推奨）
     config.add_autoload_paths_to_load_path = false
 
+    # Cookieを処理するmeddlewareを追加
+    config.middleware.use ActionDispatch::Cookies
+
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
