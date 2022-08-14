@@ -45,6 +45,9 @@ module App
     # Cookieを処理するmeddlewareを追加
     config.middleware.use ActionDispatch::Cookies
 
+    # Cookieのsamesite属性を変更（Rails v6.1~, :strict, :lax, :none）
+    config.action_dispatch.cookies_same_site_protection = ENV["COOKIES_SAME_SITE"].to_sym if Rails.env.production?
+
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
